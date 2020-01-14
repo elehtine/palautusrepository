@@ -6,5 +6,5 @@ Kurssin 0. osan tehtävät.
 
 Sekvenssikaavio muistiinpanon lisäämisestä ensimmäiseen ohjelmaan
 
-<img src=" https://github.com/elehtine/ot-harjoitustyo/blob/master/dokumentointi/kuvat/a-3.png" width="320">
+<img src="https://github.com/elehtine/palautusrepository/blob/master/kuvat/osa0-sekvenssikaavio.png" width="320">
 
