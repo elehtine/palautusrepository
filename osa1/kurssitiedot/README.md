@@ -1,3 +1,5 @@
+RDEAME.md oli valmiina. Mielestäni se on sopiva sellaisenaan. Kansio sisältää _kurssitiedot_ tehtäväsarjan.
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
