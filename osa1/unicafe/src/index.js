@@ -13,13 +13,27 @@ const Count = ({count, prefix, suffix}) => (
   </div>
 )
 
+const Statistics = (props) => {
+  const count = props.good + props.neutral + props.bad
+  const sum = props.good - props.bad
+  
+  return (
+    <div>
+        <h1>statistics</h1>
+        <Count count={props.good} prefix='good' />
+        <Count count={props.neutral} prefix='neutral' />
+        <Count count={props.bad} prefix='bad' />
+        <Count count={props.count} prefix='all' />
+        <Count count={sum / count} prefix='average' />
+        <Count count={100 * props.good / count} prefix='positive' suffix='%' />
+    </div>
+  )
+}
+
 const App = () => {
   const [good, setGood] = useState(0)
   const [neutral, setNeutral] = useState(0)
   const [bad, setBad] = useState(0)
-
-  const count = good + neutral + bad
-  const sum = good - bad
 
   return (
     <div>
@@ -36,13 +50,11 @@ const App = () => {
         handleClick={() => setBad(bad + 1)}
         text='bad'
       />
-      <h1>statistics</h1>
-      <Count count={good} prefix='good' />
-      <Count count={neutral} prefix='neutral' />
-      <Count count={bad} prefix='bad' />
-      <Count count={count} prefix='all' />
-      <Count count={sum / count} prefix='average' />
-      <Count count={good / count} prefix='positive' suffix='%' />
+      <Statistics
+        good={good}
+        neutral={neutral}
+        bad={bad}
+      />
     </div>
   )
 }
