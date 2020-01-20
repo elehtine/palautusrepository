@@ -3,13 +3,13 @@ import ReactDOM from 'react-dom'
 
 const Button = ({handleClick, text}) => (
   <button onClick={handleClick}>
-    text
+    {text}
   </button>
 )
 
-const Count = ({count, text}) => (
+const Count = ({count, prefix, suffix}) => (
   <div>
-    {text} {count}
+    {prefix} {count} {suffix}
   </div>
 )
 
@@ -17,6 +17,9 @@ const App = () => {
   const [good, setGood] = useState(0)
   const [neutral, setNeutral] = useState(0)
   const [bad, setBad] = useState(0)
+
+  const count = good + neutral + bad
+  const sum = good - bad
 
   return (
     <div>
@@ -34,9 +37,12 @@ const App = () => {
         text='bad'
       />
       <h1>statistics</h1>
-      <Count count={good} text='good' />
-      <Count count={neutral} text='neutral' />
-      <Count count={bad} text='bad' />
+      <Count count={good} prefix='good' />
+      <Count count={neutral} prefix='neutral' />
+      <Count count={bad} prefix='bad' />
+      <Count count={count} prefix='all' />
+      <Count count={sum / count} prefix='average' />
+      <Count count={good / count} prefix='positive' suffix='%' />
     </div>
   )
 }
