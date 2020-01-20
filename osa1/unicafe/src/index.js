@@ -7,26 +7,43 @@ const Button = ({handleClick, text}) => (
   </button>
 )
 
-const Count = ({count, prefix, suffix}) => (
-  <div>
-    {prefix} {count} {suffix}
-  </div>
+const StatisticsLine = ({count, prefix, suffix}) => (
+  <tbody>
+    <tr>
+      <td>
+        {prefix}
+      </td>
+      <td>
+        {count}
+      </td>
+      <td>
+        {suffix}
+      </td>
+    </tr>
+  </tbody>
 )
 
 const Statistics = (props) => {
   const count = props.good + props.neutral + props.bad
   const sum = props.good - props.bad
   
+  if (count === 0) {
+    return (
+      <div>
+        No feedback given
+      </div>
+    )
+  }
+
   return (
-    <div>
-        <h1>statistics</h1>
-        <Count count={props.good} prefix='good' />
-        <Count count={props.neutral} prefix='neutral' />
-        <Count count={props.bad} prefix='bad' />
-        <Count count={props.count} prefix='all' />
-        <Count count={sum / count} prefix='average' />
-        <Count count={100 * props.good / count} prefix='positive' suffix='%' />
-    </div>
+    <table>
+        <StatisticsLine count={props.good} prefix='good' />
+        <StatisticsLine count={props.neutral} prefix='neutral' />
+        <StatisticsLine count={props.bad} prefix='bad' />
+        <StatisticsLine count={count} prefix='all' />
+        <StatisticsLine count={sum / count} prefix='average' />
+        <StatisticsLine count={100 * props.good / count} prefix='positive' suffix='%' />
+    </table>
   )
 }
 
@@ -50,6 +67,7 @@ const App = () => {
         handleClick={() => setBad(bad + 1)}
         text='bad'
       />
+      <h1>statistics</h1>
       <Statistics
         good={good}
         neutral={neutral}
