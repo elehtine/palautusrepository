@@ -8,7 +8,7 @@ Kurssin full stack 2020 palautus repository
 
 ### Kurssitiedot
 
-Kurssitieto tehtäväsarja on kansiossa [kurssitiedot](https://github.com/elehtine/palautusrepository/tree/master/osa1/kurssitiedot). Olennainen tiedosto [index.js](https://github.com/elehtine/palautusrepository/blob/master/osa1/kurssitiedot/src/index.js).
+Kurssitiedot tehtäväsarja on kansiossa [kurssitiedot](https://github.com/elehtine/palautusrepository/tree/master/osa1/kurssitiedot). Olennainen tiedosto [index.js](https://github.com/elehtine/palautusrepository/blob/master/osa1/kurssitiedot/src/index.js).
 
 ### Unicafe
 
@@ -20,5 +20,10 @@ Anekdootit tehtäväsarja on kansiossa [anekdootit](https://github.com/elehtine/
 
 ## [osa 2](https://github.com/elehtine/palautusrepository/tree/master/osa2)
 
+### Kurssitiedot
 
-Kurssitieto tehtäväsarja on kansiossa [kurssitiedot](https://github.com/elehtine/palautusrepository/tree/master/osa1/kurssitiedot). Olennainen tiedosto [index.js](https://github.com/elehtine/palautusrepository/blob/master/osa1/kurssitiedot/src/index.js).
+Kurssitiedot tehtäväsarja on kansiossa [kurssitiedot](https://github.com/elehtine/palautusrepository/tree/master/osa1/kurssitiedot). Olennainen tiedosto [index.js](https://github.com/elehtine/palautusrepository/blob/master/osa1/kurssitiedot/src/index.js).
+
+## Puhelinluettelo
+
+Puhelinluettelo tehtäväsarja on kansiossa [Puhelinluettelo](https://github.com/elehtine/palautusrepository/tree/master/osa2/puhelinluettelo). Olennaiset tiedostot ovat kansiossa [src](https://github.com/elehtine/palautusrepository/blob/master/osa2/puhelinluettelo/src).
