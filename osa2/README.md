@@ -8,4 +8,4 @@ Kurssitieto tehtäväsarja on kansiossa [kurssitiedot](https://github.com/elehti
 
 ## Puhelinluettelo
 
-Kurssitieto tehtäväsarja on kansiossa [Puhelinluettelo](https://github.com/elehtine/palautusrepository/tree/master/osa2/puhelinluettelo). Olennaiset tiedostot ovat kansiossa [src](https://github.com/elehtine/palautusrepository/blob/master/osa2/kurssitiedot/src).
+Puhelinluettelo tehtäväsarja on kansiossa [Puhelinluettelo](https://github.com/elehtine/palautusrepository/tree/master/osa2/puhelinluettelo). Olennaiset tiedostot ovat kansiossa [src](https://github.com/elehtine/palautusrepository/blob/master/osa2/kurssitiedot/src).
