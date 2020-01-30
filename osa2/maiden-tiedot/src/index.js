@@ -13,11 +13,18 @@ const Find = ({ handleSearch, search }) => {
   )
 }
 
-const CountryList = ({ countries }) => {
+const CountryList = ({ countries, setSearch }) => {
   return (
     <div>
       {countries.map(country => 
-        <div key={country.name}>{country.name}</div>
+        <div key={country.name}>
+          <form onSubmit={(event) => {
+            event.preventDefault()
+            setSearch(country.name)
+          }}>
+            {country.name} <button type="submit">view</button>
+          </form>
+        </div>
       )}
     </div>
   )
@@ -79,7 +86,10 @@ const App = () => {
         handleSearch={handleSearch}
         search={search}
       />
-      <CountryList countries={countriesToShow} />
+      <CountryList 
+        countries={countriesToShow}
+        setSearch={setSearch}
+      />
     </div>
   )
 }
