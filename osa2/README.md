@@ -9,3 +9,7 @@ Kurssitieto tehtäväsarja on kansiossa [kurssitiedot](https://github.com/elehti
 ## Puhelinluettelo
 
 Puhelinluettelo tehtäväsarja on kansiossa [Puhelinluettelo](https://github.com/elehtine/palautusrepository/tree/master/osa2/puhelinluettelo). Olennaiset tiedostot ovat kansiossa [src](https://github.com/elehtine/palautusrepository/blob/master/osa2/puhelinluettelo/src).
+
+## Maiden tiedot
+
+Maiden tiedot tehtäväsarja on kansiossa [maiden-tiedot](https://github.com/elehtine/palautusrepository/tree/master/osa2/maiden-tiedot). Olennainen tiedosto on [index.js](https://github.com/elehtine/palautusrepository/blob/master/osa2/maiden-tiedot/src/index.js)
