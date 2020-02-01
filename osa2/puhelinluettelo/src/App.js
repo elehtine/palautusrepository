@@ -65,7 +65,6 @@ const App = () => {
     axios
       .get('http://localhost:3001/persons')
       .then((response) => {
-        console.log(response.data)
         setPersons(response.data)
       })
   },[])
@@ -88,9 +87,14 @@ const App = () => {
       name: newName,
       number: newNumber
     }
-    setPersons(persons.concat(nameObj))
-    setNewName('')
-    setNewNumber('')
+
+    axios
+      .post('http://localhost:3001/persons', nameObj)
+      .then(request => {
+        setPersons(persons.concat(nameObj))
+        setNewName('')
+        setNewNumber('')
+      })
   }
 
   const showedPersons = persons.filter(person => 
