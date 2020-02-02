@@ -59,6 +59,13 @@ const App = () => {
               setMessage(null)
             }, 2000)
           })
+          .catch(error => {
+            setMessage(`Person ${personObj.name} is not in phonebook`)
+            setPersons(persons.filter(person => person.id !== personObj.id))
+            setTimeout(() => {
+              setMessage(null)
+            }, 2000)
+          })
       }
       return
     }
