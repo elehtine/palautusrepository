@@ -76,21 +76,34 @@ const App = () => {
   const addPerson = (event) => {
     event.preventDefault()
 
-    let found = false
-    persons.forEach(person => {
-      if (person.name === newName) {
-        found = true
-      }
-    })
-    if (found) {
-      window.alert(`${newName} is already added to phonebook`)
-      return
-    }
-
     const personObj = {
       name: newName,
       number: newNumber
     }
+
+    let found = false
+    persons.forEach(person => {
+      if (person.name === newName) {
+        found = true
+        personObj.id = person.id
+      }
+    })
+
+    if (found) {
+      if (window.confirm(`${newName} is already added to phonebook, replace the old number with a new one?`)) {
+        personService
+          .update(personObj.id, personObj)
+          .then(response => {
+            setPersons(persons.map(person => 
+              person.id !== personObj.id ? person : personObj
+            ))
+            setNewName('')
+            setNewNumber('')
+          })
+      }
+      return
+    }
+
 
     personService
       .create(personObj)
@@ -102,13 +115,15 @@ const App = () => {
   }
 
   const removePerson = (id) => {
-    personService
-      .remove(id)
-      .then(result => {
-        if (result) {
-          setPersons(persons.filter(person => person.id !== id))
-        }
-      })
+    if (window.confirm(`Delete ${persons.find(p => p.id === id).name}?`)) {
+      personService
+        .remove(id)
+        .then(result => {
+          if (result) {
+            setPersons(persons.filter(person => person.id !== id))
+          }
+        })
+    }
   }
 
   const showedPersons = persons.filter(person => 
