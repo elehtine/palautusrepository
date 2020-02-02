@@ -1,63 +1,8 @@
 import React, { useState, useEffect } from 'react'
-import axios from 'axios'
 import personService from './services/persons'
-
-const Filter = ({ searchName, handleSearchName }) => {
-  return (
-    <div>
-      filter shown with<input
-        value={searchName}
-        onChange={handleSearchName}
-      />
-    </div>
-  )
-}
-
-const PersonForm = (props) => {
-  return (
-    <div>
-      <form onSubmit={props.addPerson}>
-        <div>
-          name: <input
-            value={props.newName}
-            onChange={props.handleNameChange}
-          />
-        </div>
-        <div>
-          number: <input 
-            value={props.newNumber}
-            onChange={props.handleNumberChange}
-          />
-        </div>
-        <div><button type="submit">add</button></div>
-      </form>
-    </div>
-  )
-}
-
-const Persons = ({ showedPersons, remove }) => {
-  return (
-    <div>
-      {showedPersons.map(person =>
-        <Person
-          key={person.name}
-          person={person} 
-          remove={remove}
-        />
-      )}
-    </div>
-  )
-}
-
-const Person = ({ person, remove }) => {
-  return (
-    <p>
-      {person.name} {person.number} <button 
-        onClick={() => remove(person.id)}
-      >delete</button>
-    </p>
-  )
-}
+import Persons from './components/Persons'
+import PersonForm from './components/PersonForm'
+import Filter from './components/Filter'
 
 const App = () => {
   const [persons, setPersons] = useState([])
@@ -80,7 +25,6 @@ const App = () => {
       name: newName,
       number: newNumber
     }
-
     let found = false
     persons.forEach(person => {
       if (person.name === newName) {
@@ -103,7 +47,6 @@ const App = () => {
       }
       return
     }
-
 
     personService
       .create(personObj)
