@@ -35,23 +35,26 @@ const PersonForm = (props) => {
   )
 }
 
-const Persons = ({ showedPersons }) => {
+const Persons = ({ showedPersons, remove }) => {
   return (
     <div>
       {showedPersons.map(person =>
-        <Number
+        <Person
           key={person.name}
           person={person} 
+          remove={remove}
         />
       )}
     </div>
   )
 }
 
-const Number = ({ person }) => {
+const Person = ({ person, remove }) => {
   return (
     <p>
-      {person.name} {person.number}
+      {person.name} {person.number} <button 
+        onClick={() => remove(person.id)}
+      >delete</button>
     </p>
   )
 }
@@ -98,6 +101,16 @@ const App = () => {
       })
   }
 
+  const removePerson = (id) => {
+    personService
+      .remove(id)
+      .then(result => {
+        if (result) {
+          setPersons(persons.filter(person => person.id !== id))
+        }
+      })
+  }
+
   const showedPersons = persons.filter(person => 
     person.name.toLowerCase().includes(searchName.toLowerCase()))
 
@@ -126,7 +139,10 @@ const App = () => {
         handleNumberChange={handleNumberChange}
       />
       <h2>Numbers</h2>
-      <Persons showedPersons={showedPersons} />
+      <Persons 
+        showedPersons={showedPersons}
+        remove={removePerson}
+      />
     </div>
   )
 
