@@ -94,7 +94,6 @@ const App = () => {
       personService
         .remove(id)
         .then(result => {
-          console.log(result)
           setPersons(persons.filter(person => {
             if (person.id !== id) {
               return true
