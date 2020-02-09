@@ -81,6 +81,12 @@ const App = () => {
           setMessage(null)
         }, 2000)
       })
+      .catch(error => {
+        setMessage(error.response.data.error)
+        setTimeout(() => {
+          setMessage(null)
+        }, 2000)
+      })
   }
 
   const removePerson = (id) => {
@@ -88,18 +94,17 @@ const App = () => {
       personService
         .remove(id)
         .then(result => {
-          if (result) {
-            setPersons(persons.filter(person => {
-              if (person.id !== id) {
-                return true
-              }
-              setMessage(`Person ${person.name} is deleted`)
-              setTimeout(() => {
-                setMessage(null)
-              }, 2000)
-              return false
-            }))
-          }
+          console.log(result)
+          setPersons(persons.filter(person => {
+            if (person.id !== id) {
+              return true
+            }
+            setMessage(`Person ${person.name} is deleted`)
+            setTimeout(() => {
+              setMessage(null)
+            }, 2000)
+            return false
+          }))
         })
     }
   }
