@@ -48,6 +48,22 @@ test('blog has identifier id', async () => {
   expect(response.body[0].id).toBeDefined()
 })
 
+test('blog can be added to blogs', async () => {
+  const blogObject = new Blog({
+    title: "Canonical string reduction",
+    author: "Edsger W. Dijkstra",
+    url: "http://www.cs.utexas.edu/~EWD/transcriptions/EWD08xx/EWD808.html",
+    likes: 12
+  })
+
+  await blogObject.save()
+  const response = await api.get('/api/blogs')
+  expect(response.body.length).toBe(initialBlogs.length + 1)
+
+  const blogs = response.body.map(blog => blog.title)
+  expect(blogs).toContain(blogObject.title)
+})
+
 afterAll(() => {
   mongoose.connection.close()
 })
