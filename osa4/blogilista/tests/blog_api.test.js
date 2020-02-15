@@ -120,6 +120,42 @@ test('blog can not be saved without url', async () => {
     .expect(400)
 })
 
+test('blog can be updated', async () => {
+  const blogs = await api.get('/api/blogs')
+  const body = blogs.body
+
+  await api
+    .put(`/api/blogs/${body[0].id}`)
+    .send({...body[0], title: 'New Title'})
+    .expect(200)
+
+  const response = await api
+    .get('/api/blogs')
+    .expect(200)
+    .expect('Content-Type', /application\/json/)
+
+  expect(response.body.length).toBe(initialBlogs.length)
+  expect(response.body.map(blog => blog.title)).not.toContain(body[0].title)
+  expect(response.body.map(blog => blog.title)).toContain('New Title')
+})
+
+test('blog can be deleted', async () => {
+  const blogs = await api.get('/api/blogs')
+  const body = blogs.body
+
+  await api
+    .delete(`/api/blogs/${body[0].id}`)
+    .expect(404)
+
+  const response = await api
+    .get('/api/blogs')
+    .expect(200)
+    .expect('Content-Type', /application\/json/)
+
+  expect(response.body.map(blog => blog.title)).not.toContain(body[0].title)
+  expect(response.body.length).toBe(initialBlogs.length - 1)
+})
+
 afterAll(() => {
   mongoose.connection.close()
 })
