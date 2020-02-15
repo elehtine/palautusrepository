@@ -22,12 +22,7 @@ const initialBlogs = [
 
 beforeEach(async () => {
   await Blog.deleteMany({})
-
-  let blogObject = new Blog(initialBlogs[0])
-  await blogObject.save()
-
-  blogObject = new Blog(initialBlogs[1])
-  await blogObject.save()
+  await Blog.insertMany(initialBlogs)
 })
 
 test('blogs are returned as json', async () => {
@@ -49,19 +44,54 @@ test('blog has identifier id', async () => {
 })
 
 test('blog can be added to blogs', async () => {
-  const blogObject = new Blog({
+  const newBlog = {
     title: "Canonical string reduction",
     author: "Edsger W. Dijkstra",
     url: "http://www.cs.utexas.edu/~EWD/transcriptions/EWD08xx/EWD808.html",
     likes: 12
-  })
+  }
 
-  await blogObject.save()
-  const response = await api.get('/api/blogs')
+  await api
+    .post('/api/blogs')
+    .send(newBlog)
+    .expect(201)
+    .expect('Content-Type', /application\/json/)
+
+  const response = await api
+    .get('/api/blogs')
+    .expect(200)
+    .expect('Content-Type', /application\/json/)
+
   expect(response.body.length).toBe(initialBlogs.length + 1)
 
   const blogs = response.body.map(blog => blog.title)
-  expect(blogs).toContain(blogObject.title)
+  expect(blogs).toContain(newBlog.title)
+})
+
+test('blog saved without likes has zero likes', async () => {
+  const newBlog = {
+    title: "Canonical string reduction",
+    author: "Edsger W. Dijkstra",
+    url: "http://www.cs.utexas.edu/~EWD/transcriptions/EWD08xx/EWD808.html",
+  }
+
+  await api
+    .post('/api/blogs')
+    .send(newBlog)
+    .expect(201)
+    .expect('Content-Type', /application\/json/)
+
+  const response = await api
+    .get('/api/blogs')
+    .expect(200)
+    .expect('Content-Type', /application\/json/)
+
+  const blogs = response.body
+
+  expect(blogs.length).toBe(initialBlogs.length + 1)
+  blogs.forEach(blog => {
+    expect(blog.likes).toBeDefined()
+  })
 })
 
 afterAll(() => {
