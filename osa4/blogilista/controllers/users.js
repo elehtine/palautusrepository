@@ -5,6 +5,10 @@ const User = require('../models/user')
 usersRouter.post('/', async (req, res) => {
   const body = req.body
 
+  if (body.password.length < 3) {
+    return res.status(400).json({ error: "invalid password" })
+  }
+
   const saltRounds = 10
   const passwordHash = await bcrypt.hash(body.password, saltRounds)
 
@@ -14,9 +18,13 @@ usersRouter.post('/', async (req, res) => {
     passwordHash
   })
 
-  const savedUser = await newUser.save()
+  try {
+    const savedUser = await newUser.save()
+    res.status(201).json(savedUser)
+  } catch (expection) {
+    return res.status(400).json({ error: "invalid username" })
+  }
   
-  res.json(savedUser)
 })
 
 module.exports = usersRouter
