@@ -14,9 +14,12 @@ const App = () => {
   const [ author, setAuthor ] = useState('')
   const [ url, setUrl ] = useState('')
 
-  useEffect(async () => {
-    const blogs = await blogService.getAll()
-    setBlogs( blogs )
+  useEffect(() => {
+    blogService
+      .getAll()
+      .then(blogs => {
+        setBlogs(blogs)
+      })
   }, [])
 
   useEffect(() => {
@@ -24,6 +27,7 @@ const App = () => {
     if (loggedUserJSON) {
       const user = JSON.parse(loggedUserJSON)
       setUser(user)
+      blogService.setToken(user.token)
     }
   }, [])
 
@@ -53,11 +57,12 @@ const App = () => {
     }
   }
 
-  const createBlog = (event) => {
+  const createBlog = async (event) => {
     event.preventDefault()
-    blogService.create({
+    const newBlog = await blogService.create({
       title, author, url
     })
+    setBlogs(blogs.concat(newBlog))
   }
 
   if (user === null) {
