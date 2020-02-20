@@ -1,11 +1,14 @@
 import React, { useState, useEffect } from 'react'
 import Blog from './components/Blog'
 import CreateBlog from './components/CreateBlog'
+import Notification from './components/Notification'
 import blogService from './services/blogs'
 import loginService from './services/login'
 
 const App = () => {
   const [blogs, setBlogs] = useState([])
+  const [message, setMessage] = useState(null)
+
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [user, setUser] = useState(null)
@@ -52,8 +55,12 @@ const App = () => {
       setUser(user)
       setUsername('')
       setPassword('')
+      setMessage(null)
     } catch (expection) {
-      console.log(expection)
+      setMessage('wrong username or password')
+      setTimeout(() => {
+        setMessage(null)
+      }, 5000)
     }
   }
 
@@ -63,12 +70,17 @@ const App = () => {
       title, author, url
     })
     setBlogs(blogs.concat(newBlog))
+    setMessage(`new blog ${newBlog.title} ${newBlog.author} added`)
   }
 
   if (user === null) {
     return (
       <div>
         <h2>Log in to application</h2>
+        <Notification
+          type="error"
+          message={message}
+        />
         <form onSubmit={handleLogin}>
           <div>
             username
@@ -97,6 +109,10 @@ const App = () => {
   return (
     <div>
       <h2>blogs</h2>
+      <Notification 
+        type="info"
+        message={message}
+      />
       <p>{user.name} logged in</p>
       <form onSubmit={handleLogout} >
         <button type="submit" >logout</button>
