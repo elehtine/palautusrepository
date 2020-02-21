@@ -67,6 +67,15 @@ const App = () => {
     })
     setBlogs(blogs.concat(newBlog))
     setMessage(`new blog ${newBlog.title} ${newBlog.author} added`)
+    setTimeout(() => {
+      setMessage(null)
+    }, 5000)
+  }
+
+  const updateBlog = async (id, newBlog) => {
+    const returnedBlog = await blogService.update(id, newBlog)
+    setBlogs(blogs.map(blog => blog.id !== id ? blog :
+      { ...blog, likes: returnedBlog.likes }))
   }
 
   if (user === null) {
@@ -119,7 +128,11 @@ const App = () => {
       </Togglable>
 
       {blogs.map(blog =>
-        <Blog key={blog.id} blog={blog} />
+        <Blog 
+          key={blog.id} 
+          blog={blog} 
+          updateBlog={updateBlog}
+        />
       )}
     </div>
   )
