@@ -130,7 +130,7 @@ const App = () => {
   return (
     <div>
       <h1>blogs</h1>
-      <Notification 
+      <Notification
         type="info"
         message={message}
       />
@@ -144,16 +144,16 @@ const App = () => {
       </Togglable>
 
       {blogs
-          .sort(compareLikes)
-          .map(blog =>
-        <Blog 
-          key={blog.id} 
-          blog={blog} 
-          updateBlog={updateBlog}
-          user={user}
-          removeBlog={removeBlog}
-        />
-      )}
+        .sort(compareLikes)
+        .map(blog =>
+          <Blog
+            key={blog.id}
+            blog={blog}
+            updateBlog={updateBlog}
+            user={user}
+            removeBlog={removeBlog}
+          />
+        )}
     </div>
   )
 }

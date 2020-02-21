@@ -24,7 +24,7 @@ const create = async newObject => {
   return res.data
 }
 
-const removeBlog = async (id, newObject) => {
+const removeBlog = async (id) => {
   const config = {
     headers: {
       Authorization: token
