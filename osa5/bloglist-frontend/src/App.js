@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import Blog from './components/Blog'
-import CreateBlog from './components/CreateBlog'
+import BlogForm from './components/BlogForm'
 import Notification from './components/Notification'
 import Togglable from './components/Togglable'
 import blogService from './services/blogs'
@@ -13,10 +13,6 @@ const App = () => {
   const [ username, setUsername ] = useState('')
   const [ password, setPassword ] = useState('')
   const [ user, setUser ] = useState(null)
-
-  const [ title, setTitle ] = useState('')
-  const [ author, setAuthor ] = useState('')
-  const [ url, setUrl ] = useState('')
 
   useEffect(() => {
     blogService
@@ -65,8 +61,7 @@ const App = () => {
     }
   }
 
-  const createBlog = async (event) => {
-    event.preventDefault()
+  const createBlog = async (title, author, url) => {
     const newBlog = await blogService.create({
       title, author, url
     })
@@ -119,15 +114,7 @@ const App = () => {
         <button type="submit" >logout</button>
       </form>
       <Togglable buttonLabel="new note" >
-        <CreateBlog 
-          title={title}
-          setTitle={setTitle}
-          author={author}
-          setAuthor={setAuthor}
-          url={url}
-          setUrl={setUrl}
-          createBlog={createBlog} 
-        />
+        <BlogForm createBlog={createBlog} />
       </Togglable>
 
       {blogs.map(blog =>
