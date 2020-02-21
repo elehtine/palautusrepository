@@ -78,6 +78,18 @@ const App = () => {
       { ...blog, likes: returnedBlog.likes }))
   }
 
+  const removeBlog = async (blog) => {
+    if (window.confirm(`Remove blog ${blog.title}`)) {
+      const id = blog.id
+      await blogService.removeBlog(id)
+      setMessage(`${blog.title} deleted`)
+      setBlogs(blogs.filter(blog => blog.id !== id))
+      setTimeout(() => {
+        setMessage(null)
+      }, 5000)
+    }
+  }
+
   const compareLikes = (a, b) => {
     return b.likes - a.likes
   }
@@ -138,6 +150,8 @@ const App = () => {
           key={blog.id} 
           blog={blog} 
           updateBlog={updateBlog}
+          user={user}
+          removeBlog={removeBlog}
         />
       )}
     </div>
