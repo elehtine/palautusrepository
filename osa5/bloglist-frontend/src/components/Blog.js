@@ -44,7 +44,7 @@ const Blog = ({ blog, updateBlog }) => {
           >like</button>
         </div>
         <div>
-          {JSON.stringify(blog.user)}
+          {blog.user.name}
         </div>
       </div>
     )
