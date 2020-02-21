@@ -72,7 +72,7 @@ const App = () => {
   if (user === null) {
     return (
       <div>
-        <h2>Log in to application</h2>
+        <h1>Log in to application</h1>
         <Notification
           type="error"
           message={message}
@@ -104,7 +104,7 @@ const App = () => {
 
   return (
     <div>
-      <h2>blogs</h2>
+      <h1>blogs</h1>
       <Notification 
         type="info"
         message={message}
@@ -113,7 +113,8 @@ const App = () => {
       <form onSubmit={handleLogout} >
         <button type="submit" >logout</button>
       </form>
-      <Togglable buttonLabel="new note" >
+      <Togglable buttonLabel="create new blog" >
+        <h2>create new</h2>
         <BlogForm createBlog={createBlog} />
       </Togglable>
 
