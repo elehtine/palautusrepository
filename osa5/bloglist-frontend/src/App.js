@@ -2,16 +2,17 @@ import React, { useState, useEffect } from 'react'
 import Blog from './components/Blog'
 import CreateBlog from './components/CreateBlog'
 import Notification from './components/Notification'
+import Togglable from './components/Togglable'
 import blogService from './services/blogs'
 import loginService from './services/login'
 
 const App = () => {
-  const [blogs, setBlogs] = useState([])
-  const [message, setMessage] = useState(null)
+  const [ blogs, setBlogs ] = useState([])
+  const [ message, setMessage ] = useState(null)
 
-  const [username, setUsername] = useState('')
-  const [password, setPassword] = useState('')
-  const [user, setUser] = useState(null)
+  const [ username, setUsername ] = useState('')
+  const [ password, setPassword ] = useState('')
+  const [ user, setUser ] = useState(null)
 
   const [ title, setTitle ] = useState('')
   const [ author, setAuthor ] = useState('')
@@ -117,15 +118,18 @@ const App = () => {
       <form onSubmit={handleLogout} >
         <button type="submit" >logout</button>
       </form>
-      <CreateBlog 
-        title={title}
-        setTitle={setTitle}
-        author={author}
-        setAuthor={setAuthor}
-        url={url}
-        setUrl={setUrl}
-        createBlog={createBlog} 
-      />
+      <Togglable buttonLabel="new note" >
+        <CreateBlog 
+          title={title}
+          setTitle={setTitle}
+          author={author}
+          setAuthor={setAuthor}
+          url={url}
+          setUrl={setUrl}
+          createBlog={createBlog} 
+        />
+      </Togglable>
+
       {blogs.map(blog =>
         <Blog key={blog.id} blog={blog} />
       )}
