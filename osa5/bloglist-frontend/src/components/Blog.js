@@ -58,7 +58,6 @@ const Blog = ({ blog, updateBlog, user, removeBlog }) => {
           {blog.user.name}
         </div>
         <div>
-          {console.log(user, blog.user)}
           {user.username === blog.user.username && removeButton()}
         </div>
       </div>
