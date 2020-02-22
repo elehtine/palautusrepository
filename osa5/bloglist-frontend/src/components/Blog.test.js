@@ -59,3 +59,36 @@ test('url and likes can be shown', () => {
   expect(component.container).toHaveTextContent(blog.url)
   expect(component.container).toHaveTextContent(blog.likes)
 })
+
+test('pressing likes button two times calls event handler two times', () => {
+  const blog = {
+    title: 'Title',
+    author: 'Author',
+    url: 'www.blog.url',
+    likes: 1337,
+    user: {
+      name: 'Elias Lehtinen',
+      username: 'ELlAS'
+    }
+  }
+
+  const user = {
+      name: 'Elias Lehtinen',
+      username: 'ELlAS'
+  }
+
+  const mockHandler = jest.fn()
+
+  const component = render(
+    <Blog blog={blog} user={user} updateBlog={mockHandler} />
+  )
+
+  const button = component.getByText('view')
+  fireEvent.click(button)
+
+  const likeButton = component.getByText('like')
+  fireEvent.click(likeButton)
+  fireEvent.click(likeButton)
+
+  expect(mockHandler.mock.calls.length).toBe(2)
+})
