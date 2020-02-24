@@ -31,3 +31,11 @@ Puhelinluettelo tehtäväsarja on kansiossa [Puhelinluettelo](https://github.com
 ### Maiden tiedot
 
 Maiden tiedot tehtäväsarja on kansiossa [maiden-tiedot](https://github.com/elehtine/palautusrepository/tree/master/osa2/maiden-tiedot). Olennainen tiedosto on [index.js](https://github.com/elehtine/palautusrepository/blob/master/osa2/maiden-tiedot/src/index.js)
+
+## [osa 4](https://github.com/elehtine/palautusrepository/tree/master/osa4)
+
+Blogilista tehtäväsarja on kansiossa [blogilista](https://github.com/elehtine/palautusrepository/tree/master/osa4/blogilista).
+
+## [osa 5](https://github.com/elehtine/palautusrepository/tree/master/osa5)
+
+Blogilista tehtäväsarjan frontend on kansiossa [blogilista-frontend](https://github.com/elehtine/palautusrepository/tree/master/osa5/bloglist-frontend).
