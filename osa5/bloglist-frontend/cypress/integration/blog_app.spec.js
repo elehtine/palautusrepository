@@ -10,11 +10,11 @@ describe('Blog app', function() {
     cy.visit('http://localhost:3000')
   })
 
-  it('Login from is shown', function() {
+  it('Login form is shown', function() {
     cy.get('#loginForm')
   })
 
-  describe('Login',function() {
+  describe('Login', function() {
     it('succeeds with correct credentials', function() {
       cy.get('#username').type('ELlAS')
       cy.get('#password').type('kissa123')
@@ -33,17 +33,35 @@ describe('Blog app', function() {
 
   describe('When logged in', function() {
     beforeEach(function() {
-      cy.get('#username').type('ELlAS')
-      cy.get('#password').type('kissa123')
-      cy.get('#login-button').click()
+      cy.login({ username: 'ELlAS', password: 'kissa123' })
     })
 
-    it('A blog can be created', function() {
+    it('a blog can be created', function() {
       cy.get('#title').type('Title')
       cy.get('#author').type('Author')
       cy.get('#url').type('www.blog.url')
       cy.get('#blog-button').click()
       cy.contains('Title Author')
     })
+
+    describe('and a blog exists', function() {
+      beforeEach(function() {
+        cy.addBlog({ 
+          title: 'Title',
+          author: 'Author',
+          url: 'www.blog.url'
+        })
+      })
+
+      it('it can be viewed and liked multiple times', function() {
+        cy.contains('view').click()
+        cy.contains('likes 0')
+        cy.contains('like').click()
+        cy.contains('likes 1')
+        cy.contains('like').click()
+        cy.contains('likes 2')
+      })
+    })
+
   })
 })
