@@ -1,12 +1,20 @@
 describe('Blog app', function() {
   beforeEach(function() {
     cy.request('POST', 'http://localhost:3001/api/testing/reset')
-    const user = {
+    const rightUser = {
       username: 'ELlAS',
       name: 'Elias Lehtinen',
       password: 'kissa123'
     }
-    cy.request('POST', 'http://localhost:3001/api/users', user)
+    cy.request('POST', 'http://localhost:3001/api/users', rightUser)
+
+    const wrongUser = {
+      username: 'Tepi',
+      name: 'Teppo Testi',
+      password: 'salis'
+    }
+    cy.request('POST', 'http://localhost:3001/api/users', wrongUser)
+
     cy.visit('http://localhost:3000')
   })
 
@@ -44,7 +52,7 @@ describe('Blog app', function() {
       cy.contains('Title Author')
     })
 
-    describe('and a blog exists', function() {
+    describe.only('and a blog exists', function() {
       beforeEach(function() {
         cy.addBlog({ 
           title: 'Title',
@@ -60,6 +68,30 @@ describe('Blog app', function() {
         cy.contains('likes 1')
         cy.contains('like').click()
         cy.contains('likes 2')
+      })
+
+      it('it can be removed', function() {
+        cy.contains('view').click()
+        cy.contains('remove').click()
+        cy.get('html').should('not.contain', 'Title Author')
+      })
+
+    })
+
+    describe.only('and other users blog exists', function() {
+      beforeEach(function() {
+        cy.login({ username: 'Tepi', password: 'salis' })
+        cy.addBlog({
+          title: 'Title',
+          author: 'Author',
+          url: 'www.blog.url'
+        })
+        cy.login({ username: 'ELlAS', password: 'kissa123' })
+      })
+
+      it('it can not be removed', function() {
+        cy.contains('view').click()
+        cy.get('html').should('not.contain', 'remove')
       })
     })
 
