@@ -52,7 +52,7 @@ describe('Blog app', function() {
       cy.contains('Title Author')
     })
 
-    describe.only('and a blog exists', function() {
+    describe('and a blog exists', function() {
       beforeEach(function() {
         cy.addBlog({ 
           title: 'Title',
@@ -78,7 +78,7 @@ describe('Blog app', function() {
 
     })
 
-    describe.only('and other users blog exists', function() {
+    describe('and other users blog exists', function() {
       beforeEach(function() {
         cy.login({ username: 'Tepi', password: 'salis' })
         cy.addBlog({
@@ -95,5 +95,37 @@ describe('Blog app', function() {
       })
     })
 
+    describe('and multiple blogs exists', function() {
+      beforeEach(function() {
+        cy.addBlog({ title: 'Title1', author: 'Author1', url: 'www.blog1.url' })
+        cy.addBlog({ title: 'Title2', author: 'Author2', url: 'www.blog2.url' })
+        cy.addBlog({ title: 'Title3', author: 'Author3', url: 'www.blog3.url' })
+      })
+
+      it('they are sorted by likes', function() {
+        cy.contains('Title1').parent().contains('view').click()
+        cy.contains('Title2').parent().contains('view').click()
+        cy.contains('Title3').parent().contains('view').click()
+
+        cy.contains('Title1').parent().contains('likes 0').click()
+        cy.contains('Title2').parent().contains('likes 0').click()
+        cy.contains('Title3').parent().contains('likes 0').click()
+
+        cy.contains('Title1').parent().contains('like').click()
+        cy.contains('Title1').parent().contains('likes 1').click()
+        cy.contains('Title2').parent().contains('like').click()
+        cy.contains('Title2').parent().contains('likes 1').click()
+        cy.contains('Title2').parent().contains('like').click()
+        cy.contains('Title2').parent().contains('likes 2').click()
+
+        cy.get('#blog').then(blogs => {
+          cy.wrap(blogs[0]).contains('likes 2')
+          cy.wrap(blogs[1]).contains('likes 1')
+          cy.wrap(blogs[2]).contains('likes 0')
+        })
+      })
+    })
+
   })
+
 })
