@@ -97,12 +97,13 @@ const App = () => {
   if (user === null) {
     return (
       <div>
-        <h1>Log in to application</h1>
+        <h1>Blogs</h1>
+        <h2>Log in to application</h2>
         <Notification
           type="error"
           message={message}
         />
-        <form onSubmit={handleLogin}>
+        <form id="loginForm" onSubmit={handleLogin} >
           <div>
             username
             <input
@@ -129,7 +130,7 @@ const App = () => {
 
   return (
     <div>
-      <h1>blogs</h1>
+      <h1>Blogs</h1>
       <Notification
         type="info"
         message={message}
