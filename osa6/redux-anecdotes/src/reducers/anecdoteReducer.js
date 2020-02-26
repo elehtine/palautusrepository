@@ -29,6 +29,9 @@ const reducer = (state = initialState, action) => {
         votes: anecdoteToChange.votes + 1
       }
       return state.map(a => a.id !== id ? a : changedAnecdote)
+    case 'NEW_ANECDOTE':
+      const newAnecdote = asObject(action.data.content)
+      return [...state, newAnecdote]
     default:
       console.log('state now: ', state)
       console.log('action', action)
