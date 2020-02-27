@@ -17,12 +17,14 @@ const Anecdote = ({ anecdote, handleClick }) => {
 
 const AnecdoteList = () => {
   const dispatch = useDispatch()
-  const anecdotes = useSelector(state => state.anecdotes)
+  const { anecdotes, notification } = useSelector(state => state)
 
   const handleVote = (anecdote) => {
     dispatch(addVoteTo(anecdote.id))
     dispatch(setNotification(`you voted '${anecdote.content}'`))
-    setTimeout(() => dispatch(setNotification(null)), 5000)
+    setTimeout(() => {
+      dispatch(setNotification(null))
+    }, 5000)
   }
 
   return (
