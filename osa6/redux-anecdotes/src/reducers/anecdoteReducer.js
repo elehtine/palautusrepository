@@ -14,23 +14,10 @@ export const initializeAnecdotes = (data) => {
   }
 }
 
-export const createAnecdote = (content) => {
+export const createAnecdote = (anecdote) => {
   return {
     type: 'NEW_ANECDOTE',
-    data: {
-      content
-    }
-  }
-}
-
-
-const getId = () => (100000 * Math.random()).toFixed(0)
-
-const asObject = (anecdote) => {
-  return {
-    content: anecdote,
-    id: getId(),
-    votes: 0
+    anecdote
   }
 }
 
@@ -52,8 +39,7 @@ const anecdoteReducer = (state = [], action) => {
     case 'INIT_ANECDOTES':
       return action.data
     case 'NEW_ANECDOTE':
-      const newAnecdote = asObject(action.data.content)
-      return [...state, newAnecdote]
+      return [...state, action.anecdote]
         .sort(compareAnecdotes)
     default:
       console.log('state now: ', state)

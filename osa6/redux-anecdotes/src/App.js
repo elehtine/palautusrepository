@@ -4,13 +4,13 @@ import AnecdoteForm from './components/AnecdoteForm'
 import AnecdoteList from './components/AnecdoteList'
 import Notification from './components/Notification'
 import Filter from './components/Filter'
-import noteServices from './services/anecdotes'
+import anecdoteService from './services/anecdotes'
 import { initializeAnecdotes }  from './reducers/anecdoteReducer'
 
 const App = () => {
   const dispatch = useDispatch()
   useEffect(() => {
-    noteServices.getAll().then(anecdotes => {
+    anecdoteService.getAll().then(anecdotes => {
       dispatch(initializeAnecdotes(anecdotes))
     })
   }, [dispatch])
