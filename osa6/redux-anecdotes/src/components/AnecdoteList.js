@@ -20,7 +20,7 @@ const AnecdoteList = () => {
   const { anecdotes, filter } = useSelector(state => state)
 
   const handleVote = (anecdote) => {
-    dispatch(addVoteTo(anecdote.id))
+    dispatch(addVoteTo(anecdote.id, anecdote))
     dispatch(setNotification(`you voted '${anecdote.content}'`))
     setTimeout(() => {
       dispatch(setNotification(null))
