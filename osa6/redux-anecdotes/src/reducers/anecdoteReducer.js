@@ -7,8 +7,6 @@ export const addVoteTo = (id, anecdote) => {
       votes: anecdote.votes + 1
     })
 
-    console.log(votedAnecdote)
-
     dispatch({
       type: 'VOTE',
       data: votedAnecdote
@@ -44,7 +42,6 @@ const anecdoteReducer = (state = [], action) => {
   switch (action.type) {
     case 'VOTE':
       const anecdote = action.data
-      console.log(anecdote)
       const id = anecdote.id
       return state.map(a => a.id !== id ? a : anecdote)
         .sort(compareAnecdotes)
@@ -54,8 +51,6 @@ const anecdoteReducer = (state = [], action) => {
       return [...state, action.data]
         .sort(compareAnecdotes)
     default:
-      console.log('state now: ', state)
-      console.log('action', action)
       return state
   }
 }
