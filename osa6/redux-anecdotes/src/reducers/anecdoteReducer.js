@@ -1,3 +1,5 @@
+import anecdoteService from '../services/anecdotes'
+
 export const addVoteTo = (id) => {
   return {
     type: 'VOTE',
@@ -7,17 +9,23 @@ export const addVoteTo = (id) => {
   }
 }
 
-export const initializeAnecdotes = (data) => {
-  return {
-    type: 'INIT_ANECDOTES',
-    data
+export const initializeAnecdotes = () => {
+  return async dispatch => {
+    const anecdotes = await anecdoteService.getAll()
+    dispatch({
+      type: 'INIT_ANECDOTES',
+      data: anecdotes
+    })
   }
 }
 
-export const createAnecdote = (anecdote) => {
-  return {
-    type: 'NEW_ANECDOTE',
-    anecdote
+export const createAnecdote = (content) => {
+  return async dispatch => {
+    const newAnecdote = await anecdoteService.createNew(content)
+    dispatch({
+      type: 'NEW_ANECDOTE',
+      data: newAnecdote
+    })
   }
 }
 
@@ -39,7 +47,7 @@ const anecdoteReducer = (state = [], action) => {
     case 'INIT_ANECDOTES':
       return action.data
     case 'NEW_ANECDOTE':
-      return [...state, action.anecdote]
+      return [...state, action.data]
         .sort(compareAnecdotes)
     default:
       console.log('state now: ', state)
