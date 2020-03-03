@@ -13,8 +13,8 @@ const Menu = () => {
   return (
     <div>
       <Link to='/' style={padding}>anecdotes</Link>
-      <Link to='create' style={padding}>create new</Link>
-      <Link to='about' style={padding}>about</Link>
+      <Link to='/create' style={padding}>create new</Link>
+      <Link to='/about' style={padding}>about</Link>
     </div>
   )
 }
@@ -68,9 +68,9 @@ const Footer = () => (
 )
 
 const CreateNew = (props) => {
-  const content = useField('text')
-  const author = useField('text')
-  const info = useField('text')
+  const { reset: resetContent, ...content } = useField('text')
+  const { reset: resetAuthor, ...author } = useField('text')
+  const { reset: resetInfo, ...info } = useField('text')
 
   const history = useHistory()
 
@@ -103,9 +103,9 @@ const CreateNew = (props) => {
         </div>
         <button>create</button>
         <button type="button" onClick={() => { 
-          content.reset()
-          author.reset()
-          info.reset()
+          resetContent()
+          resetAuthor()
+          resetInfo()
         }}>reset</button>
       </form>
     </div>
