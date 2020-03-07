@@ -75,6 +75,15 @@ const Blog = () => {
         </div>
         <div>{blog.user.name}</div>
         {own&&<button id='remove-button' onClick={() => handleRemove(blog.id)}>remove</button>}
+        <div>
+          <h3>comments</h3>
+          <ul>
+            {blog.comments.map(comment => <li
+              key={comment.id}
+              >{comment.message}</li>
+            )}
+          </ul>
+        </div>
     </div>
   )
 }
