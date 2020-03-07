@@ -40,15 +40,16 @@ router.put('/:id', async (request, response) => {
 })
 
 router.post('/:id/comments', async (req, res) => {
-  console.log('add comment')
+  console.log(req.body)
   const comment = new Comment(req.body)
   const savedComment = await comment.save()
   const blog = await Blog.findById(req.params.id)
-  console.log('comment', savedComment)
+  console.log('comment', comment)
+  console.log('comment', savedComment.toJSON())
   console.log('blog', blog)
   blog.comments = blog.comments.concat(savedComment._id)
   await blog.save()
-  res.status(201).json(savedComment)
+  res.status(201).json(savedComment.toJSON())
 })
 
 router.post('/', async (request, response) => {

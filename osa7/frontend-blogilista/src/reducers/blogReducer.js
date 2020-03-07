@@ -5,6 +5,16 @@ export const initializeBlogs = (blogs) => {
   }
 }
 
+export const createComment = (comment, id) => {
+  return {
+    type: 'NEW_COMMENT',
+    data: {
+      comment,
+      id
+    }
+  }
+}
+
 export const createBlog = (blog, user) => {
   return {
     type: 'NEW_BLOG',
@@ -38,6 +48,10 @@ const blogReducer = (state = [], action) => {
       return state.concat(action.data)
     case 'INIT_BLOGS':
       return action.data
+    case 'NEW_COMMENT':
+      const blog = state.find(blog => blog.id === action.data.id)
+      const newComments = blog.comments.concat(action.data.comment)
+      return state.map(blog => blog.id !== action.data.id ? blog : {...blog, comments: newComments })
     case 'REMOVE_BLOG':
       const id = action.data.id
       return state.filter(blog => blog.id !== id)

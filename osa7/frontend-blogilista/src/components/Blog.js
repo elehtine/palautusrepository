@@ -5,7 +5,8 @@ import { useParams, useHistory } from 'react-router-dom'
 import {
   removeBlog,
   updateBlog,
-  initializeBlogs
+  initializeBlogs,
+  createComment
 } from '../reducers/blogReducer'
 import { setUser } from '../reducers/userReducer'
 import {
@@ -64,6 +65,14 @@ const Blog = () => {
     }
   }
 
+  const handleSubmit = async (event) => {
+    event.preventDefault()
+    const message = event.target.message.value
+    event.target.message.value = ''
+    const newComment = await blogService.addComment({ message }, blog.id)
+    dispatch(createComment(newComment, blog.id))
+  }
+
   return (
     <div className='blog'>
       <div>
@@ -77,6 +86,10 @@ const Blog = () => {
         {own&&<button id='remove-button' onClick={() => handleRemove(blog.id)}>remove</button>}
         <div>
           <h3>comments</h3>
+          <form onSubmit={handleSubmit}>
+            <input id='message' />
+            <button type='submit'>add comment</button>
+          </form>
           <ul>
             {blog.comments.map(comment => <li
               key={comment.id}
