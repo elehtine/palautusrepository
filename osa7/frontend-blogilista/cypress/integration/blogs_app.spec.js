@@ -49,7 +49,6 @@ describe('Blog app', function() {
       cy.get('#create').click()
 
       cy.contains('Readable Cypress.io tests')
-      cy.contains('Gleb Bahmutov')
     })
   })
 
@@ -62,47 +61,51 @@ describe('Blog app', function() {
       cy.login({ username: 'hellas', password: 'salainen' })
       cy.createBlog({ author: 'Jane Doe', title: 'test3', url: 'http://example.com./test3' })
 
-      cy.contains('test1').parent().parent().as('blog1')
-      cy.contains('test2').parent().parent().as('blog2')
-      cy.contains('test3').parent().parent().as('blog3')
+      cy.contains('test1').as('blog1')
+      cy.contains('test2').as('blog2')
+      cy.contains('test3').as('blog3')
     })
 
     it('Blogs can be liked', function() {
-      cy.get('@blog2').contains('view').click()
-      cy.get('@blog2').contains('like').click()
-      cy.get('@blog2').contains('likes 1')
+      cy.get('@blog2').click()
+      cy.get('#like-button').click()
+      cy.contains('likes 1').click()
     })
 
     it('they are ordered by number of likes', function() {
-      cy.get('@blog1').contains('view').click()
-      cy.get('@blog2').contains('view').click()
-      cy.get('@blog3').contains('view').click()
-      cy.get('@blog1').contains('like').as('like1')
-      cy.get('@blog2').contains('like').as('like2')
-      cy.get('@blog3').contains('like').as('like3')
-
-      cy.get('@like2').click()
-      cy.get('@like1').click()
-      cy.get('@like1').click()
-      cy.get('@like3').click()
-      cy.get('@like3').click()
-      cy.get('@like3').click()
-
-      cy.get('@like3').parent().contains('likes 3')
+      cy.get('@blog2').click()
+      cy.get('#like-button').click()
+      cy.contains('likes 1').click()
+      cy.visit('http://localhost:3000')
+      cy.get('@blog3').click()
+      cy.get('#like-button').click()
+      cy.contains('likes 1').click()
+      cy.get('#like-button').click()
+      cy.contains('likes 2').click()
+      cy.get('#like-button').click()
+      cy.contains('likes 3').click()
+      cy.visit('http://localhost:3000')
+      cy.get('@blog1').click()
+      cy.get('#like-button').click()
+      cy.contains('likes 1').click()
+      cy.get('#like-button').click()
+      cy.contains('likes 2').click()
+      cy.visit('http://localhost:3000')
 
       cy.get('.blog').then(blogs => {
-        cy.wrap(blogs[0]).contains('likes 3')
-        cy.wrap(blogs[1]).contains('likes 2')
-        cy.wrap(blogs[2]).contains('likes 1')
+        cy.wrap(blogs[0]).contains('test3')
+        cy.wrap(blogs[1]).contains('test1')
+        cy.wrap(blogs[2]).contains('test2')
       })
     })
 
     it('The creator can delete a blog', function() {
-      cy.get('@blog3').contains('view').click()
-      cy.get('@blog3').contains('remove').click()
+      cy.get('@blog3').click()
+      cy.get('#remove-button').click()
+
       cy.get('home').should('not.contain', 'test3')
 
-      cy.get('@blog2').contains('view').click()
+      cy.get('@blog2').click()
       cy.get('@blog2').should('not.contain', 'remove')
     })
   })

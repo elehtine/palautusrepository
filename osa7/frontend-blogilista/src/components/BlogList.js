@@ -49,7 +49,7 @@ const BlogList = () => {
         <NewBlog createBlog={newBlog}/>
       </Togglable>
       {blogs.sort(byLikes).map(blog => 
-        <div key={blog.id}>
+        <div className='blog' key={blog.id}>
           <Link
             key={blog.id}
             to={`/blogs/${blog.id}`}

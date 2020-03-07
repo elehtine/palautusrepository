@@ -44,11 +44,11 @@ const App = () => {
     dispatch(setUser(user))
   }, [dispatch])
 
-  const notifyWith = (message) => {
+  const notifyWith = (message, type) => {
     const timeoutId = setTimeout(() => {
       dispatch(removeNotification())
     }, 5000)
-    dispatch(createNotification(message, 'success', timeoutId))
+    dispatch(createNotification(message, type, timeoutId))
   }
 
   const handleLogin = async (event) => {
@@ -61,7 +61,7 @@ const App = () => {
       setUsername('')
       setPassword('')
       dispatch(setUser(user))
-      notifyWith(`${user.name} welcome back!`)
+      notifyWith(`${user.name} welcome back!`, 'success')
       storage.saveUser(user)
     } catch(exception) {
       notifyWith('wrong username/password', 'error')
