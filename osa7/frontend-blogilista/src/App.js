@@ -44,15 +44,11 @@ const App = () => {
     dispatch(setUser(user))
   }, [dispatch])
 
-  const notifyWith = (message, type='success') => {
-    const notification = {
-      message,
-      type
-    }
+  const notifyWith = (message) => {
     const timeoutId = setTimeout(() => {
       dispatch(removeNotification())
     }, 5000)
-    dispatch(createNotification(notification, timeoutId))
+    dispatch(createNotification(message, 'success', timeoutId))
   }
 
   const handleLogin = async (event) => {
@@ -110,11 +106,14 @@ const App = () => {
 
   return (
     <Router>
+      <div>
+        <Link to="/" >blogs</Link>
+        <Link to="/users" >users</Link>
+        {users.user.name} logged in <button onClick={handleLogout}>logout</button>
+      </div>
+
       <h2>blogs</h2>
       <Notification notification={notification} />
-      <p>
-        {users.user.name} logged in <button onClick={handleLogout}>logout</button>
-      </p>
 
       <Switch>
         <Route path="/users/:id">

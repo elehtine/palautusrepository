@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react'
 import blogService from '../services/blogs'
 import { useDispatch, useSelector } from 'react-redux'
+import { Link } from 'react-router-dom'
 
 import Togglable from './Togglable'
 import NewBlog from './NewBlog'
@@ -49,10 +50,10 @@ const BlogList = () => {
       </Togglable>
       {blogs.sort(byLikes).map(blog => 
         <div key={blog.id}>
-          <a
+          <Link
             key={blog.id}
-            href={`/blogs/${blog.id}`}
-          >{blog.title}</a>
+            to={`/blogs/${blog.id}`}
+          >{blog.title}</Link>
         </div>
       )}
     </div>
