@@ -2,6 +2,7 @@ import React, { useEffect } from 'react'
 import blogService from '../services/blogs'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
+import styled from 'styled-components'
 
 import Togglable from './Togglable'
 import NewBlog from './NewBlog'
@@ -14,6 +15,20 @@ import {
   createNotification,
   removeNotification
 } from '../reducers/notificationReducer'
+
+const Header2 = styled.h2`
+  padding: 1em;
+`
+
+const List = styled.div`
+  padding: 0.5em;
+`
+
+const Blog = styled.div`
+  border: 10px solid #9932CC;
+  border-radius: 15px;
+  padding: 1em;
+`
 
 const BlogList = () => {
   const dispatch = useDispatch()
@@ -45,16 +60,18 @@ const BlogList = () => {
 
   return (
     <div>
+      <Header2>Blogs</Header2>
       <Togglable buttonLabel="create new blog" ref={blogFormRef}>
         <NewBlog createBlog={newBlog}/>
       </Togglable>
-      {blogs.sort(byLikes).map(blog => 
-        <div className='blog' key={blog.id}>
-          <Link
-            key={blog.id}
-            to={`/blogs/${blog.id}`}
-          >{blog.title}</Link>
-        </div>
+      {blogs.sort(byLikes).map(blog =>
+        <List key={blog.id}>
+          <Blog className='blog' key={blog.id}>
+            <Link
+              to={`/blogs/${blog.id}`}
+            >{blog.title}</Link>
+          </Blog>
+        </List>
       )}
     </div>
   )

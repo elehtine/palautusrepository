@@ -25,15 +25,15 @@ const initialState = {
 
 const notificationReducer = (state = initialState, action) => {
   switch (action.type) {
-    case 'CREATE_NOTIFICATION':
-      if (state.timeoutId) {
-        clearTimeout(state.timeoutId)
-      }
-      return action.data
-    case 'REMOVE_NOTIFICATION':
-      return initialState
-    default:
-      return state
+  case 'CREATE_NOTIFICATION':
+    if (state.timeoutId) {
+      clearTimeout(state.timeoutId)
+    }
+    return action.data
+  case 'REMOVE_NOTIFICATION':
+    return initialState
+  default:
+    return state
   }
 }
 

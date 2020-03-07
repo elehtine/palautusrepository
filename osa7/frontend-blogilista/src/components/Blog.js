@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useParams, useHistory } from 'react-router-dom'
+import styled from 'styled-components'
 
 import {
   removeBlog,
@@ -16,6 +17,16 @@ import {
 
 import blogService from '../services/blogs'
 import storage from '../utils/storage'
+
+const Container = styled.div`
+  padding: 1em;
+`
+
+const Comment = styled.div`
+  border: solid #9932CC;
+  padding: 10px;
+  margin: 1em 0em;
+`
 
 const Blog = () => {
   const dispatch = useDispatch()
@@ -74,30 +85,29 @@ const Blog = () => {
   }
 
   return (
-    <div className='blog'>
+    <Container className='blog'>
       <div>
         <h2>{blog.title} {blog.author}</h2>
       </div>
-        <div>{blog.url}</div>
-        <div>likes {blog.likes}
-          <button id='like-button' onClick={() => handleLike(blog.id)}>like</button>
-        </div>
-        <div>{blog.user.name}</div>
-        {own&&<button id='remove-button' onClick={() => handleRemove(blog.id)}>remove</button>}
-        <div>
-          <h3>comments</h3>
-          <form onSubmit={handleSubmit}>
-            <input id='message' />
-            <button type='submit'>add comment</button>
-          </form>
-          <ul>
-            {blog.comments.map(comment => <li
-              key={comment.id}
-              >{comment.message}</li>
-            )}
-          </ul>
-        </div>
-    </div>
+      <a href={blog.url}>{blog.url}</a>
+      <div>likes {blog.likes}
+        <button id='like-button' onClick={() => handleLike(blog.id)}>like</button>
+      </div>
+      <div>{blog.user.name}</div>
+      {own&&<button id='remove-button' onClick={() => handleRemove(blog.id)}>remove</button>}
+      <div>
+        <h3>comments</h3>
+        <form onSubmit={handleSubmit}>
+          <input id='message' />
+          <button type='submit'>add comment</button>
+        </form>
+        {blog.comments.map(comment => 
+          <Comment
+            key={comment.id}
+          >{comment.message}</Comment>
+        )}
+      </div>
+    </Container>
   )
 }
 

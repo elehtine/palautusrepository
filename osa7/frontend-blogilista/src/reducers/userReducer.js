@@ -19,12 +19,12 @@ const initialUsers = {
 
 const userReducer = (state = initialUsers, action) => {
   switch (action.type) {
-    case 'INIT_USERS':
-      return { users: action.data.users, user: state.user }
-    case 'SET_USER':
-      return { ...state, user: action.data.user }
-    default:
-      return state
+  case 'INIT_USERS':
+    return { users: action.data.users, user: state.user }
+  case 'SET_USER':
+    return { ...state, user: action.data.user }
+  default:
+    return state
   }
 }
 

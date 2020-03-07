@@ -32,10 +32,10 @@ export const removeBlog = (id) => {
   }
 }
 
-export const updateBlog = (blog, user) => {
+export const updateBlog = (blog) => {
   return {
     type: 'UPDATE_BLOG',
-    data: { 
+    data: {
       id: blog.id,
       blog
     }
@@ -44,23 +44,26 @@ export const updateBlog = (blog, user) => {
 
 const blogReducer = (state = [], action) => {
   switch (action.type) {
-    case 'NEW_BLOG':
-      return state.concat(action.data)
-    case 'INIT_BLOGS':
-      return action.data
-    case 'NEW_COMMENT':
-      const blog = state.find(blog => blog.id === action.data.id)
-      const newComments = blog.comments.concat(action.data.comment)
-      return state.map(blog => blog.id !== action.data.id ? blog : {...blog, comments: newComments })
-    case 'REMOVE_BLOG':
-      const id = action.data.id
-      return state.filter(blog => blog.id !== id)
-    case 'UPDATE_BLOG':
-      const newBlog = action.data.blog
-      return state.map(blog => blog.id !== action.data.id ?
-        blog : newBlog)
-    default:
-      return state
+  case 'NEW_BLOG':
+    return state.concat(action.data)
+  case 'INIT_BLOGS':
+    return action.data
+  case 'NEW_COMMENT': {
+    const blog = state.find(blog => blog.id === action.data.id)
+    const newComments = blog.comments.concat(action.data.comment)
+    return state.map(blog => blog.id !== action.data.id ? blog : { ...blog, comments: newComments })
+  }
+  case 'REMOVE_BLOG': {
+    const id = action.data.id
+    return state.filter(blog => blog.id !== id)
+  }
+  case 'UPDATE_BLOG': {
+    const newBlog = action.data.blog
+    return state.map(blog => blog.id !== action.data.id ?
+      blog : newBlog)
+  }
+  default:
+    return state
   }
 }
 

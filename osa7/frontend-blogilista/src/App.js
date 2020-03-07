@@ -3,8 +3,8 @@ import { useDispatch, useSelector } from 'react-redux'
 import {
   BrowserRouter as Router,
   Switch, Route, Link,
-  useParams
 } from 'react-router-dom'
+import styled from 'styled-components'
 
 import Notification from './components/Notification'
 import Blog from './components/Blog'
@@ -25,6 +25,29 @@ import userService from './services/users'
 import loginService from './services/login'
 import storage from './utils/storage'
 
+const Button = styled.button`
+  padding: 0.5em 1em;
+  background: #AAAAFE;
+`
+
+const Page = styled.div`
+  padding: 2em;
+  background-color: #AFEEEE;
+`
+
+const Navigation = styled.div`
+  padding: 1em;
+  background-color: #48D1CC;
+`
+
+const Content = styled.div`
+  background-color: #00CDE1;
+`
+
+const padding = {
+  padding: 5
+}
+
 const App = () => {
   const dispatch = useDispatch()
   const notification = useSelector(state => state.notification)
@@ -32,7 +55,6 @@ const App = () => {
 
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
-
   useEffect(() => {
     userService.getAll().then(users =>
       dispatch(initializeUsers(users))
@@ -79,7 +101,6 @@ const App = () => {
       <div>
         <h2>login to application</h2>
         <Notification notification={notification} />
-
         <form onSubmit={handleLogin}>
           <div>
             username
@@ -106,29 +127,34 @@ const App = () => {
 
   return (
     <Router>
-      <div>
-        <Link to="/" >blogs</Link>
-        <Link to="/users" >users</Link>
-        {users.user.name} logged in <button onClick={handleLogout}>logout</button>
-      </div>
+      <Page>
+        <Navigation>
+          <Link style={padding} to="/" >blogs</Link>
+          <Link style={padding} to="/users" >users</Link>
+          {users.user.name} logged in <Button onClick={handleLogout}>logout</Button>
+        </Navigation>
 
-      <h2>blogs</h2>
-      <Notification notification={notification} />
+        <br />
+        <Notification notification={notification} />
+        <br />
 
-      <Switch>
-        <Route path="/users/:id">
-          <User />
-        </Route>
-        <Route path="/users">
-          <UserList />
-        </Route>
-        <Route path="/blogs/:id">
-          <Blog />
-        </Route>
-        <Route path="/">
-          <BlogList />
-        </Route>
-      </Switch>
+        <Content>
+          <Switch>
+            <Route path="/users/:id">
+              <User />
+            </Route>
+            <Route path="/users">
+              <UserList />
+            </Route>
+            <Route path="/blogs/:id">
+              <Blog />
+            </Route>
+            <Route path="/">
+              <BlogList />
+            </Route>
+          </Switch>
+        </Content>
+      </Page>
     </Router>
   )
 }
