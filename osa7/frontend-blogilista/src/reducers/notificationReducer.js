@@ -1,8 +1,9 @@
-export const createNotification = (notification, timeoutId) => {
+export const createNotification = (notification, type, timeoutId) => {
   return {
     type: 'CREATE_NOTIFICATION',
     data: {
-      notification,
+      message: notification,
+      type,
       timeoutId
     }
   }

@@ -27,10 +27,7 @@ export const updateBlog = (blog, user) => {
     type: 'UPDATE_BLOG',
     data: { 
       id: blog.id,
-      blog: {
-        ...blog,
-        user
-      }
+      blog
     }
   }
 }
