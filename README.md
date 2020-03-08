@@ -45,3 +45,5 @@ Blogilista tehtäväsarjan frontend on kansiossa [blogilista-frontend](https://g
 Anekdootit tehtäväsarjan frontend on kansiossa [redux-anecdotes](https://github.com/elehtine/palautusrepository/tree/master/osa6/redux-anecdotes).
 
 Unicafe tehtäväsarjan frontend on kansiossa [unicafe-redux](https://github.com/elehtine/palautusrepository/tree/master/osa6/unicafe-redux).
+
+## [Osa 7](https://github.com/elehtine/palautusrepository/tree/master/osa7)
