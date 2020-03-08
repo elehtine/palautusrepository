@@ -5,3 +5,6 @@
 # database
 db.json
 .env
+
+# npm
+node_modules
