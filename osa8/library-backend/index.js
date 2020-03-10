@@ -146,6 +146,7 @@ const resolvers = {
         authors = authors.concat({
           name: book.author,
           born: null,
+          id: uuid()
         })
       }
       return book
