@@ -115,6 +115,7 @@ const resolvers = {
         author = new Author({
           name: args.author
         })
+
         try {
           await author.save()
         } catch(error) {

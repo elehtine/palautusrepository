@@ -44,6 +44,7 @@ const Login = ({ show, setToken, setPage }) => {
         password:
         <input
           value={password}
+          type='password'
           onChange={({ target }) => setPassword(target.value)}
         />
       </div>
