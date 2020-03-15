@@ -1,9 +1,26 @@
-import React from 'react'
-import { useQuery } from '@apollo/client'
+import React, { useState, useEffect } from 'react'
+import { useLazyQuery } from '@apollo/client'
 import { ALL_BOOKS } from '../queries'
 
+const _ = require('lodash')
+
 const Books = (props) => {
-  const result = useQuery(ALL_BOOKS)
+  const [books, setBooks] = useState([])
+
+  const [getBooks, result] = useLazyQuery(ALL_BOOKS, {
+    fetchPolicy: 'no-cache'
+  })
+
+
+  useEffect(() => {
+    getBooks()
+  }, [getBooks])
+
+  useEffect(() => {
+    if (result.data) {
+      setBooks(result.data.allBooks)
+    }
+  }, [result.data])
 
   if (!props.show) {
     return null
@@ -17,7 +34,11 @@ const Books = (props) => {
     )
   }
 
-  const books = result.data.allBooks
+  const genres = _.union.apply(null, _.map(books, 'genres'))
+
+  const setGenre = (genre) => {
+    getBooks({ variables: genre === '' ? {} : { genre } })
+  }
 
   return (
     <div>
@@ -39,6 +60,11 @@ const Books = (props) => {
           )}
         </tbody>
       </table>
+      <div>
+        {genres.map(g => 
+          <button key={g} onClick={() => setGenre(g)}>{g}</button>)}
+          <button onClick={() => setGenre('')}>all genres</button>
+      </div>
     </div>
   )
 }
