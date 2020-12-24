@@ -1,4 +1,4 @@
-const { ApolloServer, gql, UserInputError } = require('apollo-server')
+const { ApolloServer, gql, UserInputError, PubSub } = require('apollo-server')
 const mongoose = require('mongoose')
 const jwt = require('jsonwebtoken')
 
@@ -9,6 +9,7 @@ const User = require('./models/users')
 const JWT_SECRET = 'SECRET_KEY'
 
 const MONGODB_URI = 'mongodb+srv://fullstack:salainen123@cluster0-qsvpo.mongodb.net/graphql?retryWrites=true&w=majority'
+const pubsub = new PubSub()
 
 console.log('connecting to', MONGODB_URI)
 
@@ -75,6 +76,10 @@ const typeDefs = gql`
       setBornTo: Int!
     ): Author
   }
+
+  type Subscription {
+    bookAdded: Book!
+  }
 `
 
 const resolvers = {
@@ -90,11 +95,11 @@ const resolvers = {
       }
       return Book.find({}).populate('author')
     },
-    allAuthors: () => Author.find({}),
+    allAuthors: () => Author.find({}).populate('books'),
   },
   Mutation: {
     createUser: (root, args) => {
-      const user = new User({ ...args })
+      const user = new User({ ...args, books: [] })
 
       return user.save()
         .catch(error => {
@@ -122,7 +127,7 @@ const resolvers = {
         throw new AuthenticationError("not authenticated")
       }
 
-      let author = await Author.findOne({ name: args.author })
+      let author = await Author.findOne({ name: args.author }).populate('books')
       if (!author) {
         author = new Author({
           name: args.author,
@@ -141,11 +146,15 @@ const resolvers = {
       
       try {
         await book.save()
+        author.books = author.books.concat(book.id)
+        author.save()
       } catch (error) {
         throw new UserInputError(error.message, {
           invalidArgs: args,
         })
       }
+
+      pubsub.publish('BOOK_ADDED', { bookAdded: book })
 
       return book
     },
@@ -154,7 +163,7 @@ const resolvers = {
         throw new AuthenticationError("not authenticated")
       }
 
-      const author = await Author.findOne({ name: args.name })
+      const author = await Author.findOne({ name: args.name }).populate('books')
       author.born = args.setBornTo
 
       try {
@@ -168,9 +177,14 @@ const resolvers = {
       return author
     }
   },
+  Subscription: {
+    bookAdded: {
+      subscribe: () => pubsub.asyncIterator(['BOOK_ADDED'])
+    }
+  },
   Author: {
     bookCount: (root) => {
-      return Book.collection.countDocuments({ author : root._id })
+      return root.books.length
     }
   }
 }
@@ -191,6 +205,7 @@ const server = new ApolloServer({
   }
 })
 
-server.listen().then(({ url }) => {
+server.listen().then(({ url, subscriptionsUrl }) => {
   console.log(`Server ready at ${url}`)
+  console.log(`Subscriptions ready at ${subscriptionsUrl}`)
 })
