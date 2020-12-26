@@ -47,3 +47,9 @@ Anekdootit tehtäväsarjan frontend on kansiossa [redux-anecdotes](https://githu
 Unicafe tehtäväsarjan frontend on kansiossa [unicafe-redux](https://github.com/elehtine/palautusrepository/tree/master/osa6/unicafe-redux).
 
 ## [Osa 7](https://github.com/elehtine/palautusrepository/tree/master/osa7)
+
+## [Osa 8](https://github.com/elehtine/palautusrepository/tree/master/osa8-uusi)
+
+[Library-backend](https://github.com/elehtine/palautusrepository/tree/master/osa8-uusi/library-backend)
+
+[Library-frontend](https://github.com/elehtine/palautusrepository/tree/master/osa8-uusi/library-frontend)
