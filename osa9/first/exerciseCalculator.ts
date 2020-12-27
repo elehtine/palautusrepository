@@ -10,11 +10,11 @@ const parseArguments = (args: Array<string>): Arguments => {
     return {
       target: Number(args[2]),
       hours: args.slice(3).map(s => Number(s))
-    }
+    };
   } else {
     throw new Error('Provided values were not numbers');
   }
-}
+};
 
 interface Result {
   periodLength: number;
@@ -27,12 +27,12 @@ interface Result {
 }
 
 
-const calculateExercises = (hours: Array<number>, target: number): Result => {
+export const calculateExercises = (hours: Array<number>, target: number): Result => {
   const mean = hours.reduce((a, b) => a + b) / hours.length;
 
-  const diff = target - mean
+  const diff = target - mean;
   const rating = diff > 2 ? 1 : (diff > 0 ? 2 : 3);
-  const descriptions = [ 'too bad', 'not too bad but could be better', 'excellent' ]
+  const descriptions = [ 'too bad', 'not too bad but could be better', 'excellent' ];
   return {
     periodLength: hours.length,
     trainingDays: hours.filter(n => n !== 0).length,
@@ -41,13 +41,12 @@ const calculateExercises = (hours: Array<number>, target: number): Result => {
     success: mean >= target,
     rating,
     ratingDescription: descriptions[rating - 1],
-  }
-
-}
+  };
+};
 
 try {
   const { target, hours } = parseArguments(process.argv);
   console.log(calculateExercises(hours, target));
 } catch (e) {
-  console.log('Error, something bad happened, message: ', e.message);
+  // console.log('Error, something bad happened, message: ', e.message);
 }
