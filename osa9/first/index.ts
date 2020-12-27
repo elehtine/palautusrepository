@@ -23,8 +23,8 @@ app.get('/bmi', (req, res) => {
 });
 
 app.post('/exercises', (req, res) => {
-  const hours = req.body.daily_exercises;
-  const target = req.body.target;
+  const hours: Array<number> = req.body.daily_exercises; // eslint-disable-line
+  const target: number = req.body.target; // eslint-disable-line
 
 
   if (hours === undefined || target === undefined) {
