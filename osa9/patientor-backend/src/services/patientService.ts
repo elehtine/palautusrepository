@@ -14,7 +14,6 @@ const getOne = (id: string): Patient | undefined => {
   }
   return {
     ...patient,
-    entries: [],
   };
 };
 
