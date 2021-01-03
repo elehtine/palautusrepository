@@ -1,7 +1,7 @@
 import express from 'express';
 
 import patientsService from '../services/patientService';
-import toPatient from '../utils';
+import { toPatient, toEntry }from '../utils';
 
 const router = express.Router();
 
@@ -27,6 +27,17 @@ router.get('/:id', (req, res) => {
     res.status(404).send('not found');
   } else {
     res.send(patientsService.getOne(id));
+  }
+});
+
+router.post('/:id/entries', (req, res) => {
+  const id = req.params.id;
+  try {
+    const entry = toEntry(req.body);
+    const addedEntry = patientsService.addEntry(id, entry);
+    res.json(addedEntry);
+  } catch (e) {
+    res.status(400).send(e.message); // eslint-disable-line
   }
 });
 
