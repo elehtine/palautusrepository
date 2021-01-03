@@ -53,3 +53,13 @@ Unicafe tehtäväsarjan frontend on kansiossa [unicafe-redux](https://github.com
 [Library-backend](https://github.com/elehtine/palautusrepository/tree/master/osa8-uusi/library-backend)
 
 [Library-frontend](https://github.com/elehtine/palautusrepository/tree/master/osa8-uusi/library-frontend)
+
+## [Osa 9](https://github.com/elehtine/palautusrepository/tree/master/osa9)
+
+[first](https://github.com/elehtine/palautusrepository/tree/master/osa9/first)
+
+[courses](https://github.com/elehtine/palautusrepository/tree/master/osa9/courses)
+
+[patientor-frontend](https://github.com/elehtine/palautusrepository/tree/master/osa9/temp)
+
+[patientor-backend](https://github.com/elehtine/palautusrepository/tree/master/osa9/patientor-backend)
